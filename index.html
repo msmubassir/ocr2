@@ -1,0 +1,22 @@
+<input type="file" id="imageUpload">
+<pre id="output"></pre>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@2/dist/tesseract.min.js"></script>
+<script>
+document.getElementById('imageUpload').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+
+  // Add multiple language codes here (e.g. English, Bengali, Arabic, Hindi)
+  const languages = 'eng+ben+ara+hin';
+
+  if (file) {
+    Tesseract.recognize(
+      file,
+      languages,
+      { logger: m => console.log(m) }
+    ).then(({ data: { text } }) => {
+      document.getElementById('output').innerText = text;
+    });
+  }
+});
+</script>
